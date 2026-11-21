@@ -313,18 +313,18 @@ body.pd-open .to-top{opacity:0;visibility:hidden;pointer-events:none}
 .pd[open]{animation:pdIn .35s var(--ease)}
 @keyframes pdIn{from{opacity:0;transform:translateY(14px) scale(.985)}}
 .pd-inner{display:grid;grid-template-columns:1.55fr 1fr;max-height:calc(100dvh - 2rem)}
-.pd-media{background:var(--sand);display:flex;flex-direction:column;min-height:0;border-inline-end:1px solid var(--line)}
+.pd-media{background:var(--sand);display:flex;flex-direction:column;min-height:0;max-height:calc(100dvh - 2rem);border-inline-end:1px solid var(--line)}
 .pd-stage{flex:1;display:grid;place-items:center;padding:1.4rem;min-height:0;overflow:auto}
 .pd-stage figure{margin:0;display:grid;gap:.7rem;justify-items:center;width:100%}
 .pd-stage img{border-radius:10px;box-shadow:var(--shadow-lg);max-height:min(68dvh,720px);width:auto;max-width:100%;object-fit:contain;background:#fff}
 .pd-stage figcaption{font-size:.86rem;color:var(--muted);text-align:center}
-.pd-nav{display:flex;align-items:center;justify-content:center;gap:1rem;padding:0 1rem 1.1rem}
+.pd-nav{display:flex;align-items:center;justify-content:center;gap:1rem;padding:.4rem 1rem 1.4rem}
 .pd-nav[hidden]{display:none}
 .pd-nav button{appearance:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:var(--card);color:var(--ink);display:grid;place-items:center;font-size:1.1rem;cursor:pointer;transition:border-color .2s,color .2s}
 .pd-nav button:hover{border-color:var(--wine);color:var(--wine)}
 html[dir="ltr"] .pd-nav svg{transform:scaleX(-1)}
 .pd-count{font-size:.85rem;font-weight:600;color:var(--muted);min-width:3.5em;text-align:center}
-.pd-body{padding:2rem 1.8rem 1.8rem;overflow:auto;display:flex;flex-direction:column;gap:.85rem}
+.pd-body{padding:2rem 1.8rem 1.8rem;overflow:auto;min-height:0;max-height:calc(100dvh - 2rem);display:flex;flex-direction:column;gap:.85rem}
 .pd-body h3{font-size:1.5rem;font-weight:700;padding-inline-end:2.5rem}
 html[lang="en"] .pd-body h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.015em}
 .pd-body .feature-title{font-size:2rem}
@@ -368,8 +368,8 @@ body.pd-open{overflow:hidden}
   .taraz-art{border-inline-end:0;border-bottom:1px solid var(--line);min-height:0;padding:1.6rem}
   .cards{grid-template-columns:repeat(2,1fr)}
   .pd-inner{grid-template-columns:1fr;overflow:auto}
-  .pd-media{border-inline-end:0;border-bottom:1px solid var(--line)}
-  .pd-body{overflow:visible}
+  .pd-media{border-inline-end:0;border-bottom:1px solid var(--line);max-height:none}
+  .pd-body{overflow:visible;max-height:none}
   .pd-stage img{max-height:52dvh}
 }
 @media (max-width:640px){
