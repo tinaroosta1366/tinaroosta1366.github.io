@@ -20,10 +20,22 @@ if (-not (Test-Path $KeyPath)) {
     exit 1
 }
 
-# 1) Pack only the site files (no git history, no deploy script, no readme).
+# 1) Copy the site files to a temp folder (no git history, no deploy script, no readme),
+#    stamp css/js links with a version so browsers load the new files, then pack it.
+#    The repo itself is not changed.
 Write-Host "1/3 Packing site files..." -ForegroundColor Cyan
+$stage = Join-Path $env:TEMP "tina-portfolio-stage"
+if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
+robocopy $repoRoot $stage /E /XD .git deploy /XF README.md CNAME .gitignore .nojekyll /NFL /NDL /NJH /NJS /NP | Out-Null
+if ($LASTEXITCODE -ge 8) { throw "copy to staging folder failed" }
+$version = Get-Date -Format "yyyyMMddHHmmss"
+$indexPath = Join-Path $stage "index.html"
+$utf8 = New-Object System.Text.UTF8Encoding $false
+$html = [System.IO.File]::ReadAllText($indexPath, $utf8)
+$html = $html.Replace('href="css/style.css"', "href=`"css/style.css?v=$version`"").Replace('src="js/main.js"', "src=`"js/main.js?v=$version`"")
+[System.IO.File]::WriteAllText($indexPath, $html, $utf8)
 if (Test-Path $archive) { Remove-Item $archive -Force }
-tar -czf $archive -C $repoRoot --exclude=.git --exclude=deploy --exclude=README.md --exclude=CNAME --exclude=.gitignore --exclude=.nojekyll .
+tar -czf $archive -C $stage .
 if ($LASTEXITCODE -ne 0) { throw "tar failed" }
 
 # 2) Upload the archive to the server's temp folder.
@@ -61,4 +73,5 @@ ssh -i $KeyPath "${User}@${Server}" "bash /tmp/tina-portfolio-publish.sh; rc=`$?
 if ($LASTEXITCODE -ne 0) { throw "remote publish failed" }
 
 Remove-Item $archive, $scriptFile -Force
+Remove-Item $stage -Recurse -Force
 Write-Host "Done." -ForegroundColor Green
