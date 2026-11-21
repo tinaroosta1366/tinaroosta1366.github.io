@@ -13,4 +13,4 @@ Static, bilingual (Persian RTL / English LTR) single-page site. No build step: o
 1. Create a public repository named `tinaroosta1366.github.io`.
 2. Upload the contents of this folder (you can leave out `previews/`).
 3. Settings → Pages → Source: “Deploy from a branch”, branch `main`, folder `/ (root)`.
-4. The site will be at https://tinaroosta1366.github.io/ (the canonical and Open Graph URLs in `index.html` already use this address; change them if you use another repository name or a custom domain).
+4. The site is served at https://tinaroosta.ir/ through the custom domain in the `CNAME` file (https://tinaroosta1366.github.io/ redirects there). The canonical, Open Graph and structured-data URLs in `index.html` use this address; change them if the domain changes.
